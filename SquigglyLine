@@ -1,0 +1,66 @@
+// Define variables
+let segments;
+let length;
+let x;
+let y;
+
+function setup() {
+  createCanvas(515, 515);
+  
+  // Constrain our lines to canvas size
+  length = width * 0.75;
+  width = length * 0.75;
+  
+  // Define segments
+  segments = 6;
+  
+  // Define starting points
+  x = 50;
+  y = 200;  
+}
+function draw() {
+  
+  // Redraw the white background each frame
+  background(255);
+  
+  // Loop through creating line segments
+  beginShape()
+  noFill()
+  
+  // Add the first point
+  stroke(0)
+  strokeWeight(5)
+  curveVertex(x, y) // creating curvature
+
+    curveVertex(x, y); // 
+  
+  // points for visualization
+  let points = [{x: x, y: y}] //initial point
+  
+  // Draw line
+  for (let i = 0; i < segments; i++){
+    
+    // Get random y
+    yRand = random(-(height * 0.125), height * 0.125);
+    
+    // Add point to curve
+    curveVertex(x += length / segments, y += yRand);
+    
+    // Save point
+    points.push({x: x, y: y})
+    
+  }
+  curveVertex(x, y); // last point
+  endShape()
+  
+  // Draw points for visualization
+  stroke(240, 30, 110)
+  strokeWeight(10)
+  points.push({x: x, y: y})
+  points.forEach(function(p){
+    point(p.x, p.y)
+  })
+  
+  // Draw the line once and stop
+  noLoop();
+}

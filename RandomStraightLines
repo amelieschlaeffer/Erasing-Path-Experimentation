@@ -1,0 +1,21 @@
+function setup() {
+  createCanvas(500, 500);
+  frameRate(30);
+}
+
+let lines = 20
+
+function draw() {
+
+  for (let i = 0; i < lines; i++){
+    // for loop making the code  draw 20 lines
+  x1 = random(500);
+  y1 = random(500);
+  x2 = random(500);
+  y2 = random(500);
+  line(x1, y1, x2, y2);
+  }
+ noLoop();
+ // stop after running once
+
+}
