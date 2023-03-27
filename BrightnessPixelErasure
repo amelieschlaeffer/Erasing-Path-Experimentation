@@ -1,0 +1,40 @@
+let img;
+
+function preload(){
+  img = loadImage('GretchenSelfie1.jpg');
+  // loading the image from local drive
+}
+
+function setup(){
+
+  createCanvas(img.width, img.height);
+
+}
+
+function draw() {
+  image(img, 0, 0);
+
+  loadPixels();
+
+  for(let col = 0; col< img.width; col+=5){
+    for(let row = 0; row<img.height; row+=5){
+
+  let px = img.get(col, row);
+
+  let r = px[0];
+  let g = px[1];
+  let b = px[2];
+  let a = px[3];
+
+  if (r <= 80) {
+  //if r value is below 80, place pixels 
+  
+    stroke(255);
+    rect(col, row, 5, 5);
+  }
+
+    }
+    
+  }
+
+}

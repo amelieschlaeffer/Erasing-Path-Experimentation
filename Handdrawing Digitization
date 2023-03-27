@@ -1,0 +1,45 @@
+let img;
+let cnv;
+function preload(){
+  img = loadImage('handdrawn.jpg');
+  // loading the image from local drive
+}
+
+function setup() {
+  cnv = createCanvas(img.width, img.height, SVG);
+  // canvas size of the image, SVG specs
+
+  let newCanvasX = (windowWidth - img.width)/2;
+  let newCanvasY = (windowHeight - img.height)/2;
+  cnv.position(newCanvasX, newCanvasY);
+
+  loadPixels();
+  // getting pixel Data ready
+
+  for(let col = 0; col< img.width; col+=1){
+    for(let row = 0; row<img.height; row+=1){
+      // loop reading the pixels at an increment through x and y positions
+
+      let px = img.get(col, row);
+      // accessing pixels in the image
+      let r = px[0];
+      let g = px[1];
+      let b = px[2];
+        // dividing the px array into red, green and blue
+
+    if (r <= 200 && g <= 100 && b <= 100){
+      // formula checking if the colour value of a pixel is close enough to black
+      // if it is not, we do not draw it, so the background is invisible
+      // if it is, draw black point on that coordinate
+      stroke(0);
+      strokeWeight(2);
+      point(col, row);
+    } 
+    
+  }
+
+}
+//save('handdrawn.svg'); // saves as SVG with file name
+//print("saved svg");
+noLoop();
+}
