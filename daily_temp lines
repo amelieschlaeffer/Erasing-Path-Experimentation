@@ -1,0 +1,33 @@
+var weather;
+let dailyhours = 24;
+
+function setup() {
+createCanvas(400, 400);
+  loadJSON('https://api.open-meteo.com/v1/forecast?latitude=51.51&longitude=-0.13&hourly=temperature_2m', gotData);
+// loading data live from web
+}
+
+  function gotData(data) {
+    weather = data;
+  
+  //print(weather);
+  //print(weather.hourly.temperature_2m[7]);
+  for (i = 0; i < dailyhours; i++){
+ 
+    let temp =  weather.hourly.temperature_2m[i];   
+    print(temp);
+
+   let newtemp = map(temp, 0,  10, 0, 300);
+    stroke(0);
+    strokeWeight(5);
+    line(newtemp, random(0, height), random(0,width), newtemp);
+  
+   }
+
+
+}
+
+
+
+
+ 

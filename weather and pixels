@@ -1,0 +1,50 @@
+var weather;
+let dailyhours = 24;
+let img;
+let newtemp;
+let temp;
+let data;
+
+function preload(){
+  img = loadImage('GretchenSelfie1.jpg');
+  // loading the image from local drive
+}
+
+function setup() {
+  createCanvas(img.width/2, img.height/2);
+  loadJSON('https://api.open-meteo.com/v1/forecast?latitude=51.51&longitude=-0.13&hourly=temperature_2m', gotData);
+// loading data live from web
+}
+
+function gotData(data) {
+  weather = data;
+  let  temp = weather.hourly.temperature_2m[12];
+  newtemp = map(temp, 0, 20, 0, 200);
+  print(newtemp);
+
+
+  img.resize(img.width/2, img.height/2);
+  image(img, 0, 0);
+  noLoop();
+  loadPixels();
+
+  for(let col = 0; col< img.width; col+=5){
+    for(let row = 0; row<img.height; row+=5){
+      
+  let px = img.get(col, row);
+
+  let r = px[0];
+  let g = px[1];
+  let b = px[2];
+  let a = px[3];
+ 
+if (r >= newtemp && g <= newtemp){
+  stroke(255);
+  rect(col, row, 5, 5);
+
+    }
+
+  }
+}
+
+}
