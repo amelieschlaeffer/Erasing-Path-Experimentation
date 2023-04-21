@@ -1,0 +1,93 @@
+
+let padding = 125
+
+// functions
+function setup() {
+  pixelDensity(5)
+  createCanvas(windowWidth, windowHeight, SVG)
+  // if for web display delete SVG and the line saving file at the end
+  background(255)
+  stroke(0)
+  fill(0)
+  noLoop()
+}
+
+function draw() {
+
+  generateTree()
+  
+}
+
+function twistedVertex(_sx, _sy, _ex, _ey, _t) {
+  const dLen = dist(_sx, _sy, _ex, _ey) * _t
+  const secL = random(0.2, 0.4)
+  const trdL = secL * 2.0
+  vertex(_sx, _sy)
+  bezierVertex(
+    lerp(_sx, _ex, secL) + random(-1.0, 1.0) * dLen,
+    lerp(_sy, _ey, secL) + random(-1.0, 1.0) * dLen,
+    lerp(_sx, _ex, trdL) + random(-1.0, 1.0) * dLen,
+    lerp(_sy, _ey, trdL) + random(-1.0, 1.0) * dLen,
+    _ex,
+    _ey
+  )
+}
+
+function handDrawnLine(x1, y1, x2, y2, t) {
+  beginShape()
+  twistedVertex(x1, y1, x2, y2, t)
+  endShape()
+}
+// for web display gives illusion of handdrawn line
+
+function branch(depth){ 
+
+  strokeWeight(5)
+
+  if (depth < 12) { 
+
+    // body of the tree (or branch)
+    handDrawnLine(0, 0, 0, -height/12, random(.05, .1))
+
+    // continue
+    translate(0, -height/12)
+    rotate(random(-0.05, 0.05))
+
+    // branching
+    if (random() < 0.65){
+
+      rotate(0.3)
+      scale(0.8)
+        
+      push()
+      branch(depth + 1)
+      pop()
+        
+      rotate(-0.6)
+        
+      push()
+      branch(depth + 1)
+      pop()
+
+    } 
+    else {
+      branch(depth)
+    }
+  }
+}
+
+function generateTree() {
+  push()
+  fill(0, 0, 0, 0)
+  translate(width/2, height-height/10-padding)
+  branch(random(0, 10))
+  pop()
+}
+
+// save an image
+function mouseClicked(){
+  save("mySVG.svg"); // give file name
+    print("saved svg");
+    noLoop(); // we just want to export once
+
+}
